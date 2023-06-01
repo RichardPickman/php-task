@@ -70,19 +70,22 @@ class ProductMapper {
             $payload[] = $this->getProduct($row->sku);
         }
 
-        return $result;
+        return $payload;
     }
 
-    public function deleteById($sku) {
+    public function deleteById($ids) {
         try {
-            $query = "DELETE FROM Product WHERE sku = :sku";
-            $stmt = $this-> db -> prepare($query);
-            $stmt->bindValue(':sku', $sku);
+            $parsedString = implode("','", $ids);
+            $parsedString = "'" . $parsedString . "'";
+            $sql = "DELETE FROM Product WHERE sku IN ($parsedString)";
+            error_log(print_r($sql, true));
+            $stmt = $this->db->prepare($sql);
             $stmt->execute();
+
+
         } catch (PDOExceptions $e) {
             http_response_code(500);
             $response = ["message" => "Error occured during deletion of a row"];
-                
 
             echo json_encode($response); // return value not echo
 
