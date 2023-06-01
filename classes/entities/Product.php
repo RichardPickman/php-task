@@ -2,25 +2,27 @@
 
 require_once './classes/Db.php';
 
-abstract class AbstractProduct extends DataBase {
+abstract class AbstractProduct {
     private $sku;
     private $name;
     private $price;
     private $type;
+    private $db;
 
     public function __construct($args) {
-        parent::__construct();
-        
         $this->sku = $args['sku'];
         $this->name = $args['name'];
         $this->price = $args['price'];
         $this->type = $args['type'];
+        $db = new DataBase();
+
+        $this->db = $db->getDb();
     }
 
     public function saveBaseValues($type) {
         $sql = "INSERT INTO Product (sku, name, price, type) VALUES (:sku, :name, :price, :type)";
-        $stmt = $this-> getDb() -> prepare($sql);
-        
+        $stmt = $this-> db -> prepare($sql);
+
         $stmt->bindValue(':sku', $this->sku);
         $stmt->bindValue(':name', $this->name);
         $stmt->bindValue(':price', $this->price);
@@ -38,14 +40,14 @@ abstract class AbstractProduct extends DataBase {
 
         $query = rtrim($query, ', ');
 
-        $stmt = $this-> getDb() -> prepare($query);
+        $stmt = $this-> db -> prepare($query);
 
         $stmt->execute();
     }
 
     public function isProductExist() {
         $sql = "SELECT COUNT(*) AS product_count FROM Product WHERE sku=:sku";
-        $stmt = $this -> getDb() -> prepare($sql);
+        $stmt = $this -> db -> prepare($sql);
         $stmt->bindValue(':sku', $this->sku);
 
         $stmt->execute();
