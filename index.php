@@ -1,7 +1,12 @@
 <?php
     header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: POST, GET, DELETE, OPTIONS");
+    header("Access-Control-Allow-Methods: GET, POST, OPTION, DELETE");
     header('Content-Type: application/json; charset=utf-8');
+    header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+    header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+    header('Access-Control-Max-Age: 1728000');
+    header('Content-Type: text/plain charset=UTF-8');
+    header('Content-Length: 0');
     
     require_once './classes/Router.php';
     require_once './classes/entities/Book.php';
