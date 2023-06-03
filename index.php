@@ -22,9 +22,9 @@
             $type = $data['type'];
 
             $productTypes = [
-                'book' => Book::class,
-                'dvd' => DVD::class,
-                'furniture' => Furniture::class,
+                'Book' => Book::class,
+                'DVD' => DVD::class,
+                'Furniture' => Furniture::class,
             ];
 
             $product = new $productTypes[$type]($data);
