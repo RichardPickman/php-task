@@ -1,4 +1,7 @@
 <?php
+    header("Access-Control-Allow-Origin: http://localhost:3000");
+    header("Access-Control-Allow-Methods: GET, POST, OPTION, DELETE");
+    header('Content-Type: application/json; charset=utf-8');
 
     class Router {
         private $routes;
